@@ -116,7 +116,13 @@ public class HandleTouchEventViewGroup extends BaseViewGroup {
                     // 使用Scroller进行定位操作
                     int contentWidth = getWidth() - getHorizontalPadding();
                     int scrollX = getScrollX();
-                    int targetIndex = (scrollX + contentWidth / 2) / contentWidth;
+                    final int targetIndex;
+                    // 滑动四分之一的宽度即可认为要滑动到下一个页面
+                    if (x - mStartX > 0) {
+                        targetIndex = (int) ((scrollX + contentWidth * 1.f / 4) / contentWidth);
+                    } else {
+                        targetIndex = (int) ((scrollX + contentWidth * 3.f / 4) / contentWidth);
+                    }
                     mScroller.startScroll(scrollX, 0, targetIndex * contentWidth - scrollX, 0);
                     invalidate();
                 }
